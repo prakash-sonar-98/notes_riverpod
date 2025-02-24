@@ -30,7 +30,7 @@ class _NotesListScreenState extends State<NotesListScreen> {
         title: Text('Notes App'),
         centerTitle: false,
         foregroundColor: Colors.white,
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.brown,
       ),
       body: Column(
         children: [
