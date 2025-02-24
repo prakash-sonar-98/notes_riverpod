@@ -28,16 +28,22 @@ jobs:
       - name: Build Web App
         run: flutter build web --release --base-href="/notes_riverpod/"
 
-      - name: Move Build Files
-        run: |
-          rm -rf docs
-          mv build/web docs
-          touch docs/.nojekyll
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web  
 
-      - name: Commit and Push to Master
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git add .
-          git commit -m "Deploy Flutter Web to Github pages" || exit 0
-          git push origin master
+      # - name: Move Build Files
+      #   run: |
+      #     rm -rf docs
+      #     mv build/web docs
+      #     touch docs/.nojekyll
+
+      # - name: Commit and Push to Master
+      #   run: |
+      #     git config --global user.name "github-actions"
+      #     git config --global user.email "github-actions@github.com"
+      #     git add .
+      #     git commit -m "Deploy Flutter Web to Github pages" || exit 0
+      #     git push origin master
