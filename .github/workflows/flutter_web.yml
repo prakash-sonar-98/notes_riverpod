@@ -1,0 +1,43 @@
+name: Deploy flutter web app
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    run-on: ubuntu-latest
+
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.27.1
+
+      - name: Enable Web
+        run: flutter config --enable-web
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build Web App
+        run: flutter build web --release --base-href="notes_riverpod"
+
+      - name: Move Build Files
+        run: |
+          rm -rf docs
+          mv build/web docs
+          touch docs/.nojeky11
+
+      - name: Commit and Push to Master
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git commit -m "Deploy Flutter Web to Github pages" || exit 0
+          git push origin master
