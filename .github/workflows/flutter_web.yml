@@ -26,7 +26,7 @@ jobs:
         run: flutter pub get
 
       - name: Build Web App
-        run: flutter build web --release --base-href="notes_riverpod"
+        run: flutter build web --release --base-href="/notes_riverpod"
 
       - name: Move Build Files
         run: |
